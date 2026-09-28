@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { Terminal, Send, Cpu } from 'lucide-react';
+import { evaluateTerminalCommand } from '../data/portfolioData';
 
 export default function SecurityTerminal() {
   const [input, setInput] = useState('');
@@ -35,6 +36,7 @@ export default function SecurityTerminal() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ command: cmd })
       });
+      if (!res.ok) throw new Error('Offline');
       const json = await res.json();
       if (json.output) {
         setHistory(prev => [...prev, { type: 'res', text: json.output }]);
@@ -42,8 +44,13 @@ export default function SecurityTerminal() {
           confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
         }
       }
-    } catch (err) {
-      setHistory(prev => [...prev, { type: 'err', text: `Error: ${err.message}` }]);
+    } catch {
+      // Local client-side evaluation for GitHub Pages
+      const output = evaluateTerminalCommand(cmd);
+      setHistory(prev => [...prev, { type: 'res', text: output }]);
+      if (output.includes('CONGRATULATIONS! FLAG VERIFIED!')) {
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      }
     } finally {
       setLoading(false);
     }

@@ -22,26 +22,45 @@ function SeverityBadge({ severity, score }) {
   );
 }
 
+import { initialAdvisories } from '../data/portfolioData';
+
 export default function Advisories() {
-  const [advisories, setAdvisories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [advisories, setAdvisories] = useState(initialAdvisories);
+  const [loading, setLoading] = useState(false);
   const [severityFilter, setSeverityFilter] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedAdvisory, setSelectedAdvisory] = useState(null);
 
   useEffect(() => { fetchAdvisories(); }, [severityFilter, searchQuery]);
 
+  const filterLocal = () => {
+    return initialAdvisories.filter(adv => {
+      const matchSeverity = severityFilter === 'ALL' || adv.severity.toUpperCase() === severityFilter.toUpperCase();
+      const matchSearch = !searchQuery || 
+        adv.cve_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        adv.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        adv.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        adv.tags.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchSeverity && matchSearch;
+    });
+  };
+
   const fetchAdvisories = async () => {
     try {
-      setLoading(true);
       const url = new URL('/api/advisories', window.location.origin);
       if (severityFilter !== 'ALL') url.searchParams.append('severity', severityFilter);
       if (searchQuery) url.searchParams.append('search', searchQuery);
       const res = await fetch(url.toString());
+      if (!res.ok) throw new Error('Not found');
       const json = await res.json();
-      if (json.success) setAdvisories(json.data);
-    } catch (err) {
-      console.error('Failed to load advisories:', err);
+      if (json.success && json.data) {
+        setAdvisories(json.data);
+      } else {
+        setAdvisories(filterLocal());
+      }
+    } catch {
+      // Offline / GitHub Pages fallback
+      setAdvisories(filterLocal());
     } finally {
       setLoading(false);
     }

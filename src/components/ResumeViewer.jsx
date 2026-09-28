@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FileText, Printer, Copy, Check, Mail, MapPin, Phone, Shield, ExternalLink, Code } from 'lucide-react';
 import { LinkedInIcon, GitHubIcon } from './SocialIcons';
+import { initialResume } from '../data/portfolioData';
 
 export default function ResumeViewer() {
-  const [resumeData, setResumeData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [resumeData, setResumeData] = useState(initialResume);
+  const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -13,16 +14,14 @@ export default function ResumeViewer() {
 
   const fetchResume = async () => {
     try {
-      setLoading(true);
       const res = await fetch('/api/resume');
+      if (!res.ok) return;
       const json = await res.json();
-      if (json.success) {
+      if (json.success && json.data) {
         setResumeData(json.data);
       }
-    } catch (err) {
-      console.error('Failed to load resume:', err);
-    } finally {
-      setLoading(false);
+    } catch {
+      // Offline / GitHub Pages static mode: already initialized with initialResume
     }
   };
 

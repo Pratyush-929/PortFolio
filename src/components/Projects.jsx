@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Terminal, Star, GitFork, ExternalLink, ShieldCheck } from 'lucide-react';
+import { initialProjects } from '../data/portfolioData';
 
 export default function Projects() {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState(initialProjects);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchProjects();
@@ -11,16 +12,14 @@ export default function Projects() {
 
   const fetchProjects = async () => {
     try {
-      setLoading(true);
       const res = await fetch('/api/projects');
+      if (!res.ok) return;
       const json = await res.json();
-      if (json.success) {
+      if (json.success && json.data) {
         setProjects(json.data);
       }
-    } catch (err) {
-      console.error('Failed to load projects:', err);
-    } finally {
-      setLoading(false);
+    } catch {
+      // Offline / GitHub Pages static mode: already initialized with initialProjects
     }
   };
 

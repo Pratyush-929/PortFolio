@@ -14,8 +14,10 @@ import ContactSection from './components/ContactSection';
 import AdminModal from './components/AdminModal';
 import Footer from './components/Footer';
 
+import { initialStats } from './data/portfolioData';
+
 export default function App() {
-  const [stats, setStats] = useState(null);
+  const [stats, setStats] = useState(initialStats);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
 
   useEffect(() => {
@@ -25,12 +27,13 @@ export default function App() {
   const fetchStats = async () => {
     try {
       const res = await fetch('/api/stats');
+      if (!res.ok) return;
       const json = await res.json();
       if (json.success) {
         setStats(json.stats);
       }
-    } catch (err) {
-      console.warn('Backend API endpoint offline, using fallback metrics.', err);
+    } catch {
+      // Offline or GitHub Pages static hosting: already initialized with initialStats
     }
   };
 

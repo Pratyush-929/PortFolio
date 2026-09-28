@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Award, CheckCircle2, ExternalLink } from 'lucide-react';
+import { initialCertifications } from '../data/portfolioData';
 
 export default function Certifications() {
-  const [certs, setCerts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [certs, setCerts] = useState(initialCertifications);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchCerts();
@@ -11,16 +12,14 @@ export default function Certifications() {
 
   const fetchCerts = async () => {
     try {
-      setLoading(true);
       const res = await fetch('/api/certs');
+      if (!res.ok) return;
       const json = await res.json();
-      if (json.success) {
+      if (json.success && json.data) {
         setCerts(json.data);
       }
-    } catch (err) {
-      console.error('Failed to load certs:', err);
-    } finally {
-      setLoading(false);
+    } catch {
+      // Offline / GitHub Pages static mode: already initialized with initialCertifications
     }
   };
 

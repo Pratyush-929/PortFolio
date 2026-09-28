@@ -1,0 +1,8 @@
+/* App-level overrides — kept minimal since index.css handles everything */
+
+/* Mobile hamburger button visibility */
+@media (max-width: 900px) {
+  #mobile-menu-btn {
+    display: inline-flex !important;
+  }
+}

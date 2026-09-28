@@ -54,8 +54,8 @@ router.get('/resume', (req, res) => {
         career_objective: 'Seeking an entry-level SOC Analyst / SOC Intern position to acquire hands-on experience in threat detection, monitoring, and incident response in a live security operations center environment.',
         summary: 'Second year student of Ethical Hacking and Cyber Security with interest in defensive security and network monitoring. Experience with core networking concepts, packet analysis and basic SIEM/log analysis via coursework and independent lab work.',
         location: 'Kathmandu, Nepal',
-        phone: '+977-9864004444',
-        email: 'pratyushsharma@gmail.com',
+        phone: 'Request a Number',
+        email: 'pratyush929@gmail.com',
         focus_split: {
           defensive_network: '55%',
           soc_monitoring: '30%',
@@ -241,8 +241,8 @@ router.post('/terminal-eval', (req, res) => {
 [+] TARGET ROLE: Aspiring SOC Analyst / Defensive Security & Network Security
 [+] COLLEGE: Softwarica College of IT & E-Commerce (Coventry Univ, UK)
 [+] STATUS: 2nd Year (4th Semester) — BSc (Hons) Cyber Security
-[+] LOCATION: Kathmandu, Nepal | Phone: +977-9864004444
-[+] EMAIL: pratyushsharma@gmail.com`;
+[+] LOCATION: Kathmandu, Nepal | Phone: Request a Number
+[+] EMAIL: pratyush929@gmail.com`;
   } else if (cmd === 'toolkit') {
     response = `TOOLKIT:
   - Wireshark

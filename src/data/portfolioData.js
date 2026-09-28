@@ -200,8 +200,8 @@ export const initialResume = {
     career_objective: 'Seeking an entry-level SOC Analyst / SOC Intern position to acquire hands-on experience in threat detection, monitoring, and incident response in a live security operations center environment.',
     summary: 'Second year student of Ethical Hacking and Cyber Security with interest in defensive security and network monitoring. Experience with core networking concepts, packet analysis and basic SIEM/log analysis via coursework and independent lab work.',
     location: 'Kathmandu, Nepal',
-    phone: '+977-9864004444',
-    email: 'pratyushsharma@gmail.com',
+    phone: 'Request a Number',
+    email: 'pratyush929@gmail.com',
     focus_split: {
       defensive_network: '55%',
       soc_monitoring: '30%',

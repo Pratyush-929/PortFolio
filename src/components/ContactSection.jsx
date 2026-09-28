@@ -101,8 +101,8 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <div className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700 }}>DIRECT EMAIL</div>
-                  <a href="mailto:pratyushsharma@gmail.com" style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)' }}>
-                    pratyushsharma@gmail.com
+                  <a href="mailto:pratyush929@gmail.com" style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                    pratyush929@gmail.com
                   </a>
                 </div>
               </div>
@@ -114,7 +114,7 @@ export default function ContactSection() {
                 <div>
                   <div className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700 }}>PHONE / WHATSAPP</div>
                   <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)' }}>
-                    +977-9864004444
+                    Request a Number
                   </div>
                 </div>
               </div>

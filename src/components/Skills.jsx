@@ -15,10 +15,10 @@ export default function Skills() {
   const securitySkills = [
     { name: 'OSINT & Reconnaissance', level: 75 },
     { name: 'Web Application Security & OWASP Top 10', level: 70 },
-    { name: 'Penetration Testing & Burp Suite', level: 68 },
+    { name: 'Digital Forensics', level: 68 },
     { name: 'Network Security & Wireshark', level: 60 },
-    { name: 'Session Hijacking & Token Audit', level: 55 },
-    { name: 'Bug Bounty Research', level: 50 },
+    { name: 'Threat Monitoring', level: 55 },
+    { name: 'SOC Analyst', level: 50 },
   ];
 
   return (
@@ -33,7 +33,7 @@ export default function Skills() {
           </div>
           <h2 className="section-title">Skills & Competencies</h2>
           <p className="section-subtitle">
-            Languages, frameworks, penetration testing tools, and ethical hacking techniques I specialize in.
+            Languages, defensive security tools, digital forensics, network packet analysis, and SOC monitoring competencies.
           </p>
         </div>
 
@@ -69,11 +69,11 @@ export default function Skills() {
             </div>
           </div>
 
-          {/* Hacking & Security */}
+          {/* Defensive Security & Operations */}
           <div className="card">
             <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <ShieldAlert size={18} style={{ color: 'var(--accent-cyan)' }} />
-              <span>Ethical Hacking & Web Security</span>
+              <span>Defensive Security & Threat Analysis</span>
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>

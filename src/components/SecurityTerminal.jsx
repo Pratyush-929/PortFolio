@@ -9,10 +9,17 @@ export default function SecurityTerminal() {
     { type: 'sys', text: 'SEC-SHELL v4.2 — Type "help" for commands or "ctf" for challenge' }
   ]);
   const [loading, setLoading] = useState(false);
-  const bottomRef = useRef(null);
+  const terminalBodyRef = useRef(null);
+  const isFirstMount = useRef(true);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    }
   }, [history]);
 
   const handleSubmit = async (e) => {
@@ -114,12 +121,12 @@ export default function SecurityTerminal() {
             </div>
             <div className="font-mono" style={{ fontSize: '0.72rem', color: '#8b949e', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <Cpu size={13} style={{ color: '#10b981' }} />
-              sec-guest@purnika-sandbox:~ (zsh)
+              sec-guest@pratyush-sandbox:~ (zsh)
             </div>
           </div>
 
           {/* Console Output */}
-          <div className="terminal-body" style={{ minHeight: '300px', maxHeight: '440px', overflowY: 'auto' }}>
+          <div ref={terminalBodyRef} className="terminal-body" style={{ minHeight: '300px', maxHeight: '440px', overflowY: 'auto' }}>
             {history.map((item, idx) => (
               <div key={idx} style={{ marginBottom: '0.35rem' }}>
                 {item.type === 'cmd' && (
@@ -150,7 +157,6 @@ export default function SecurityTerminal() {
                 [Executing remote payload...]
               </div>
             )}
-            <div ref={bottomRef} />
           </div>
 
           {/* Input Form */}

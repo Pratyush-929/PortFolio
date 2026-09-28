@@ -82,11 +82,11 @@ export default function Navbar({ onOpenAdmin }) {
 
           {/* Mobile hamburger */}
           <button
-            className="social-btn"
-            style={{ display: 'none' }}
+            className="social-btn mobile-menu-btn"
             id="mobile-menu-btn"
             onClick={() => setMenuOpen(!menuOpen)}
             title="Menu"
+            aria-label="Toggle navigation menu"
           >
             {menuOpen ? <X size={16} /> : <Menu size={16} />}
           </button>

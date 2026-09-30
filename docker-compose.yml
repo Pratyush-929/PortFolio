@@ -1,0 +1,62 @@
+services:
+  # ==========================================
+  # Service 1: Backend API (Express + SQLite)
+  # ==========================================
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend
+    container_name: portfolio-backend
+    restart: unless-stopped
+    ports:
+      - "${BACKEND_PORT:-5001}:5001"
+    environment:
+      - NODE_ENV=production
+      - PORT=5001
+      - DB_PATH=/app/data/portfolio.db
+    volumes:
+      # Persistent volume for SQLite database storage
+      - portfolio_db_data:/app/data
+    networks:
+      - portfolio-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:5001/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  # ==========================================
+  # Service 2: Frontend (Vite React + Nginx Proxy)
+  # ==========================================
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend
+    container_name: portfolio-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - portfolio-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:80/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+# Persistent volumes
+volumes:
+  portfolio_db_data:
+    name: portfolio_db_data
+
+# Isolated bridge network for inter-service communication
+networks:
+  portfolio-network:
+    driver: bridge
